@@ -1,0 +1,14 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails du burger - CRUDcroustillant{% endblock %}
+
+{% block body %}
+
+<main style="padding: 80px 15px 30px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <h2 style="color:#2c3e50;">Détails du burger : {{ burger.name }}</h2>
+    <p><strong>ID :</strong> {{ id }}</p>
+    <p><strong>Description :</strong> {{ burger.description }}</p>
+</main>
+
+{% endblock %}

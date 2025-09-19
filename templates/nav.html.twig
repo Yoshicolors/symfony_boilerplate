@@ -1,0 +1,15 @@
+<nav style="position: fixed;top: 0;left: 0;right: 0;background-color: #2c3e50;padding: 15px 30px;box-shadow: 0 2px 4px rgba(0,0,0,0.1);z-index: 1000;">
+    <ul style="list-style:none; margin:0; padding:0; display:flex; gap:25px; align-items:center; justify-content:flex-start;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-weight:600;font-size:16px;">
+        <li>
+            <a href="{{ path('home') }}" style="color:#ecf0f1; text-decoration:none; padding:8px 12px; border-radius:4px;transition: background-color 0.3s ease;"
+            onmouseover="this.style.backgroundColor='#34495e';" 
+            onmouseout="this.style.backgroundColor='transparent';"
+            >Accueil</a>
+        </li>
+        <li><a href="{{ path('burgers') }}" style="color:#ecf0f1; text-decoration:none; padding:8px 12px; border-radius:4px;transition: background-color 0.3s ease;"
+            onmouseover="this.style.backgroundColor='#34495e';" 
+            onmouseout="this.style.backgroundColor='transparent';"
+            >Nos Burgers</a>
+        </li>
+    </ul>
+</nav>
