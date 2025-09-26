@@ -5,37 +5,33 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Repository\BurgerRepository;
 
 class BurgerController extends AbstractController
 {
-    #[Route('/burgers', name: 'burgers')]
-    public function list(): Response
-    {
-        return $this->render('burgers_list.html.twig');
-    }
     #[Route('/burgers/{id}', name: 'burgers_show')]
-    public function show(int $id): Response
+    public function show(int $id, BurgerRepository $burgerRepository): Response
     {
         
-        $burgers = [
-            1 => ['name' => 'Le Classique', 'description' => 'Boeuf, salade, tomate, sauce maison.'],
-            2 => ['name' => 'Le Fromager', 'description' => 'Boeuf, cheddar fondant, oignons caramélisés.'],
-            3 => ['name' => 'Le Veggie', 'description' => 'Galette de légumes, avocat, sauce au yaourt.'],
-        ];
+        $burger = $burgerRepository->find($id);
 
-        
-        if (!isset($burgers[$id])) {
+        if (!isset($burger)) {
            
             throw $this->createNotFoundException('Burger non trouvé');
         }
 
         
-        $burger = $burgers[$id];
-
-        
         return $this->render('burgers_show.html.twig', [
-            'id' => $id,
             'burger' => $burger,
+        ]);
+    }
+    #[Route('/burgers', name: 'burgers')]
+    public function index(BurgerRepository $burgerRepository): Response
+    {
+        // Vous pouvez injecter EntityManagerInterface à la place de BurgerRepository qui n'existe pas encore
+        $burgers = $burgerRepository->findAll();
+        return $this->render('burgers_list.html.twig', [
+            'burgers' => $burgers,
         ]);
     }
 }

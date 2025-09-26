@@ -1,6 +1,113 @@
 {% extends 'base.html.twig' %}
-{% block title %}Liste des Burgers - CRUDcroustillant{% endblock %}
-{% block body %}
 
-<h2 style="padding: 80px 15px 30px;">Ceci est la liste des burgers</h2>
+{% block title %}Liste des Burgers - CRUDcroustillant{% endblock %}
+
+{% block stylesheets %}
+<style>
+:root{
+  --bg:#ffffff;
+  --card:#fbfbfc;
+  --primary:#0f1724;
+  --accent:#e86b1f;
+  --muted:#6b7280;
+  --border:#eceff3;
+}
+body {
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:var(--bg);
+  color:var(--primary);
+  margin:0;
+  -webkit-font-smoothing:antialiased;
+}
+.burger-table-wrap{ padding:80px 20px 60px; max-width:1100px; margin:0 auto; }
+.h2-title{ margin:0 0 20px; font-size:22px; font-weight:700; color:var(--primary); }
+.table-card{
+  background:var(--card);
+  border-radius:12px;
+  box-shadow:0 8px 24px rgba(15,23,36,0.06);
+  padding:18px;
+  overflow:hidden;
+}
+.burger-table{ width:100%; border-collapse:collapse; }
+.burger-table thead th{
+  text-align:left;
+  padding:12px 16px;
+  font-size:13px;
+  color:var(--muted);
+  border-bottom:2px solid var(--border);
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+.burger-table tbody td{
+  padding:14px 16px;
+  border-bottom:1px solid var(--border);
+  vertical-align:middle;
+  font-size:15px;
+}
+.burger-name{ font-weight:600; }
+.desc{ color:var(--muted); font-size:13px; }
+.price{ font-weight:700; color:var(--accent); white-space:nowrap; }
+.actions a{
+  display:inline-block;
+  text-decoration:none;
+  padding:6px 12px;
+  font-size:13px;
+  border-radius:8px;
+  background:rgba(232,107,31,0.10);
+  color:var(--accent);
+}
+
+/* Responsive */
+@media (max-width:720px){
+  .burger-table thead{ display:none; }
+  .burger-table, .burger-table tbody, .burger-table tr, .burger-table td{ display:block; width:100%; }
+  .burger-table tr{ margin-bottom:12px; background:#fff; border-radius:10px; box-shadow:0 6px 18px rgba(15,23,36,0.04); padding:12px; }
+  .burger-table td{ padding:6px 10px; border:none; }
+  .burger-name{ display:block; margin-bottom:6px; }
+  .desc{ display:block; margin:6px 0; }
+}
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="burger-table-wrap">
+  <h2 class="h2-title">Ceci est la liste des burgers</h2>
+
+  <div class="table-card">
+    <table class="burger-table" aria-describedby="liste-burgers">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Prix</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for burger in burgers %}
+          <tr id="burger-{{ burger.id }}">
+            <td>
+              <span class="burger-name">{{ burger.name|e }}</span>
+            </td>
+
+            <td class="price">
+              {% if burger.price is defined and burger.price is not empty %}
+                {{ '%0.2f'|format(burger.price) }} €
+              {% else %}
+                —
+              {% endif %}
+            </td>
+
+            <td class="actions">
+              <a href="{{ path('burgers_show', {'id': burger.id}) }}" title="Voir les détails de {{ burger.name|e }}">Détails</a>
+            </td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="4" style="padding:18px 16px; color:var(--muted);">Aucun burger trouvé.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
 {% endblock %}
